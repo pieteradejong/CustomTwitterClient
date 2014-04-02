@@ -12,7 +12,7 @@
         android:title="Compose"
         android:id="@+id/compose"
         android:orderInCategory="40"
-        android:showAsAction="never"
+        
         android:actionLayout="@layout/action_view_button"
         />
 

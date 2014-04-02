@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -40,13 +39,13 @@ public class Tweet implements Serializable {
         return created_at;
     }
     
-    public String getRelativeTimestamp() throws ParseException {
-    	
+//    public String getRelativeTimestamp() throws ParseException {
+//    	
 //    	Calendar cal = new GregorianCalendar();
 //    	String LARGE_TWITTER_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
 //    	Date date;
-    	Date date = new SimpleDateFormat("EEE MMM dd yyyy", Locale.ENGLISH).parse(this.created_at);
-    	long ms = date.getTime();
+//    	Date date = new SimpleDateFormat("EEE MMM dd yyyy", Locale.ENGLISH).parse(this.created_at);
+//    	long ms = date.getTime();
 //		try {
 //			date = new SimpleDateFormat(LARGE_TWITTER_DATE_FORMAT, Locale.ENGLISH).parse(created_at);
 //			cal.setTime(date);
@@ -55,8 +54,25 @@ public class Tweet implements Serializable {
 //			ms = 0;
 //			e.printStackTrace();
 //		}
-    	return (String) DateUtils.getRelativeDateTimeString(null, ms, DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_NO_NOON, 0);
-    }
+//    	return (String) DateUtils.getRelativeDateTimeString(null, ms, DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_NO_NOON, 0);
+//    }
+    	
+    	public String getRelativeTimeAgo(String rawJsonDate) {
+    		String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+    		SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
+    		sf.setLenient(true);
+    	 
+    		String relativeDate = "";
+    		try {
+    			long dateMillis = sf.parse(rawJsonDate).getTime();
+    			relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+    					System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+    		} catch (ParseException e) {
+    			e.printStackTrace();
+    		}
+    	 
+    		return relativeDate;
+    	}
 
     public boolean isFavorited() {
         return favorited;
@@ -88,6 +104,7 @@ public class Tweet implements Serializable {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+      	  tweet.relativeTime = tweet.getRelativeTimeAgo(tweet.created_at);
       	  tweet.favorited = jsonObject.getBoolean("favorited");
       	  tweet.retweeted = jsonObject.getBoolean("retweeted");
           tweet.user = User.fromJson(jsonObject.getJSONObject("user"));

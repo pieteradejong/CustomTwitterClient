@@ -1,6 +1,6 @@
 package com.codepath.apps.mytwitterapp;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -48,9 +48,9 @@ public class ComposeActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "clicked: " + tweetBody, Toast.LENGTH_SHORT).show();// OK
 		MyTwitterApp.getRestClient().postTweet(tweetBody, new JsonHttpResponseHandler() {
 			@Override 
-			public void onSuccess(JSONArray json) {
+			public void onSuccess(JSONObject json) {
 				  Toast.makeText(getApplicationContext(), "tweet response received successfully", Toast.LENGTH_SHORT).show();
-				  Tweet tweet = Tweet.fromJson(json).get(0);
+				  Tweet tweet = Tweet.fromJson(json);
 				  processTweet(tweet);
 			  }
 			@Override
@@ -75,7 +75,6 @@ public class ComposeActivity extends Activity {
 	}
 	public void goBack() {
 		Intent data = new Intent();
-		
 		setResult(RESULT_OK, data);
 		finish();
 	}

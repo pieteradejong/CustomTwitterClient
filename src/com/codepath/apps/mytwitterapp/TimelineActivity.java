@@ -75,12 +75,12 @@ public class TimelineActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	
 	  if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-	     Tweet tweet = (Tweet) getIntent().getSerializableExtra("tweet");
+		  Toast.makeText(this, "YES activity result success", Toast.LENGTH_SHORT).show();
+		  Tweet tweet = (Tweet) getIntent().getSerializableExtra("tweet");
 
 	     lvTweets = (ListView) findViewById(R.id.lvTweets);
 	     TweetsAdapter adapter = (TweetsAdapter) lvTweets.getAdapter();
-	     adapter.addAll(tweet);
-	     
+	     adapter.insert(tweet, 0);
 	     adapter.notifyDataSetChanged();
 	    
 	  } else {

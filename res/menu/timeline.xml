@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.codepath.apps.mytwitterapp.TimelineActivity" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        android:showAsAction="never" />
+    <item 
+        android:title="Compose"
+        android:id="@+id/compose"
+        android:orderInCategory="40"
+        android:showAsAction="never"
+        android:actionLayout="@layout/action_view_button"
+        />
+
+</menu>

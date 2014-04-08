@@ -13,6 +13,7 @@ public class User implements Serializable {
 	private String name;
 	private long uid;
 	private String screenName;
+	private String tagline;
 	private String profileBgImageUrl;
 	private String profileImageUrl;
 	private int numTweets;
@@ -38,6 +39,10 @@ public class User implements Serializable {
     public int getNumTweets() {
         return numTweets;
     }
+    
+    public String getTagline() {
+    	return tagline;
+    }
 
     public int getFollowersCount() {
         return followersCount;
@@ -57,6 +62,7 @@ public class User implements Serializable {
         	u.name = json.getString("name");
         	u.uid = json.getLong("id");
         	u.screenName = json.getString("screen_name");
+        	u.tagline = json.getString("description");
         	u.profileBgImageUrl = json.getString("profile_background_image_url");
         	u.profileImageUrl = json.getString("profile_image_url");
         	u.numTweets = json.getInt("statuses_count");

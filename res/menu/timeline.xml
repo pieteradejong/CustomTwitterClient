@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.codepath.apps.mytwitterapp.TimelineActivity" >
 
+   <item
+      android:id="@+id/item1"
+      android:showAsAction="ifRoom"
+      android:icon="@drawable/ic_profile"
+      android:onClick="onProfileView"
+      android:title="Profile"
+     />
+    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
@@ -12,8 +20,6 @@
         android:title="Compose"
         android:id="@+id/compose"
         android:orderInCategory="40"
-        
         android:actionLayout="@layout/action_view_button"
         />
-
 </menu>

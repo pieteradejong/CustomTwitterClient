@@ -1,20 +1,25 @@
 package com.codepath.apps.mytwitterapp;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.codepath.apps.mytwitterapp.fragments.HomeTimelineFragment;
+import com.codepath.apps.mytwitterapp.fragments.MentionsFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends FragmentActivity implements TabListener {
 	ListView lvTweets;
 	
 	private final int REQUEST_CODE = 20;
@@ -22,22 +27,15 @@ public class TimelineActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		lvTweets = (ListView) findViewById(R.id.lvTweets);
-		MyTwitterApp.getRestClient().getHomeTimeline(new JsonHttpResponseHandler(){
-			@Override
-			public void onSuccess(JSONArray jsonTweets) {
-				ArrayList<Tweet> tweets = Tweet.fromJson(jsonTweets);
-				TweetsAdapter adapter = new TweetsAdapter(getBaseContext(), tweets);
-				lvTweets.setAdapter(adapter);
-			}
-		});
+		setupNavigationTabs();
 		
-		lvTweets.setOnScrollListener(new EndlessScrollListener() {
-	        @Override
-	        public void onLoadMore(int page, int totalItemsCount) {
-	        	loadTweets(page);
-	        }
-	    });
+//		lvTweets = (ListView) findViewById(R.id.lvTweets);
+//		lvTweets.setOnScrollListener(new EndlessScrollListener() {
+//	        @Override
+//	        public void onLoadMore(int page, int totalItemsCount) {
+//	        	loadTweets(page);
+//	        }
+//	    });
 	}
 	
 	public void loadTweets(int page) {
@@ -48,6 +46,11 @@ public class TimelineActivity extends Activity {
 				adapter.addAll(Tweet.fromJson(jsonTweets));
 			}
 		}, page);
+	}
+	
+	public void onProfileView(MenuItem mi) {
+		Intent i = new Intent(this, ProfileActivity.class);
+		startActivity(i);
 	}
 
 	@Override
@@ -78,7 +81,7 @@ public class TimelineActivity extends Activity {
 		  Toast.makeText(this, "YES activity result success", Toast.LENGTH_SHORT).show();
 		  Tweet tweet = (Tweet) data.getSerializableExtra("tweet");
 
-	     lvTweets = (ListView) findViewById(R.id.lvTweets);
+//	     lvTweets = (ListView) findViewById(R.id.lvTweets);
 	     TweetsAdapter adapter = (TweetsAdapter) lvTweets.getAdapter();
 	     adapter.insert(tweet, 0);
 	     adapter.notifyDataSetChanged();
@@ -86,6 +89,45 @@ public class TimelineActivity extends Activity {
 	  } else {
 		  Toast.makeText(this, "activity result failed", Toast.LENGTH_SHORT).show();
 	  }
-	} 
+	}
+	private void setupNavigationTabs() {
+	    ActionBar actionbar = getActionBar();
+	    actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	    actionbar.setDisplayShowTitleEnabled(true);
+	    Tab tabHome = actionbar.newTab().setText("Home")
+	    		.setTag("HomeTimelineFragment").setIcon(R.drawable.ic_home)
+	    		.setTabListener(this);
+	    Tab tabMentions = actionbar.newTab().setText("Mentions")
+	    		.setTag("MentionsTimelineFragment").setIcon(R.drawable.ic_mentions)
+	            .setTabListener(this);
+	    
+	    actionbar.addTab(tabHome);
+	    actionbar.addTab(tabMentions);
+	    actionbar.selectTab(tabHome);
+	}
 
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		
+		
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        FragmentManager manager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fts = manager.beginTransaction(); 
+		if(tab.getTag() == "HomeTimelineFragment") {
+        	// set to home timeline
+			fts.replace(R.id.frame_container, new HomeTimelineFragment());
+        } else {
+        	// set to mentions timeline
+        	fts.replace(R.id.frame_container, new MentionsFragment());
+        }
+		fts.commit();
+	}
+
+	@Override
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+		
+	}	
 }

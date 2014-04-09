@@ -28,14 +28,6 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		setupNavigationTabs();
-		
-//		lvTweets = (ListView) findViewById(R.id.lvTweets);
-//		lvTweets.setOnScrollListener(new EndlessScrollListener() {
-//	        @Override
-//	        public void onLoadMore(int page, int totalItemsCount) {
-//	        	loadTweets(page);
-//	        }
-//	    });
 	}
 	
 	public void loadTweets(int page) {

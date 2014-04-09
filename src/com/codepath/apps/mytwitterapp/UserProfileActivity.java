@@ -1,11 +1,14 @@
 package com.codepath.apps.mytwitterapp;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.mytwitterapp.fragments.UserTimelineFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -13,18 +16,33 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class UserProfileActivity extends ProfileActivity {
 	private String username;
+	private ListView lvTweets;
+	TweetsAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		username = getIntent().getStringExtra("username");
+		Toast.makeText(this,"username: " + username, Toast.LENGTH_SHORT).show();
 		loadProfileInfo();
-//		Toast.makeText(this,"username: " + username, Toast.LENGTH_SHORT).show();
+		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(username);
 		ft.replace(R.id.your_placeholder, fragmentUserTimeline);
 		ft.commit();
+	}
+	
+	public void loadTweets(int page) {
+		lvTweets = (ListView) findViewById(R.id.lvTweets);
+		adapter = (TweetsAdapter) lvTweets.getAdapter();
+//		Toast.makeText(this, "username for inf scroll::: " + username, Toast.LENGTH_SHORT).show(); // not inf scrolling from here?
+		MyTwitterApp.getRestClient().getUserTimeline(new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(JSONArray jsonTweets) {
+				adapter.addAll(Tweet.fromJson(jsonTweets));
+			}
+		}, page, username);
 	}
 	
 	private void loadProfileInfo() {

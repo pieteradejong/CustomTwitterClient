@@ -55,7 +55,7 @@ public class TwitterClient extends OAuthBaseClient {
     }
     
     public void getMentions(AsyncHttpResponseHandler handler, int page) {
-    	String url = getApiUrl("statuses/home_timeline.json");
+    	String url = getApiUrl("statuses/mentions_timeline.json");
     	String page_string = String.valueOf(page);
     	RequestParams params = new RequestParams();
     	params.put("count", "30");

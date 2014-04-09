@@ -68,13 +68,18 @@
         
     </LinearLayout>
     
-    <fragment
+    <!--<fragment
         android:id="@+id/fragmentUserTimeline"
         android:name="com.codepath.apps.mytwitterapp.fragments.UserTimelineFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/llCounts"
-        tools:layout="@layout/fragment_tweets_list" />
+        tools:layout="@layout/fragment_tweets_list" />-->
+        <FrameLayout
+       android:id="@+id/your_placeholder"
+       android:layout_height="match_parent"
+       android:layout_width="match_parent">
+  </FrameLayout>
 
 </RelativeLayout>

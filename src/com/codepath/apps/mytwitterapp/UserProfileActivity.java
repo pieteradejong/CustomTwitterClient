@@ -22,8 +22,8 @@ public class UserProfileActivity extends ProfileActivity {
 		loadProfileInfo();
 		
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		UserTimelineFragment fragmentDemo = UserTimelineFragment.newInstance("username", "my title");
-		ft.replace(R.id.your_placeholder, fragmentDemo);
+		UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(username);
+		ft.replace(R.id.your_placeholder, fragmentUserTimeline);
 		ft.commit();
 	}
 	

@@ -36,6 +36,8 @@ public class TweetsAdapter extends ArrayAdapter<Tweet>{
 		imageView.setOnClickListener(new View.OnClickListener() {
 	        public void onClick(View v) {
 	        	String username = (String) v.getTag();
+//	        	UserTimelineFragment.newInstance(username);
+	        	
 	        	Intent i = new Intent(context, UserProfileActivity.class);
 	        	i.putExtra("username", username);
 	        	context.startActivity(i);

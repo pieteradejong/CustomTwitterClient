@@ -33,19 +33,15 @@ public class TweetsAdapter extends ArrayAdapter<Tweet>{
 		
 		Tweet tweet = getItem(position);
 		ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
+		imageView.setTag(tweet.getUser().getScreenName());
 		imageView.setOnClickListener(new View.OnClickListener() {
 	        public void onClick(View v) {
 	        	String username = (String) v.getTag();
-//	        	UserTimelineFragment.newInstance(username);
-	        	
 	        	Intent i = new Intent(context, UserProfileActivity.class);
 	        	i.putExtra("username", username);
 	        	context.startActivity(i);
 	        }
 	     });
-		
-		// set tag on view
-		view.setTag(tweet.getUser().getScreenName());
 		
 		ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
 		

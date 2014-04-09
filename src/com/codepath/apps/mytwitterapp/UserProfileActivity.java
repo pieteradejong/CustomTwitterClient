@@ -20,7 +20,7 @@ public class UserProfileActivity extends ProfileActivity {
 		setContentView(R.layout.activity_profile);
 		username = getIntent().getStringExtra("username");
 		loadProfileInfo();
-		
+//		Toast.makeText(this,"username: " + username, Toast.LENGTH_SHORT).show();
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(username);
 		ft.replace(R.id.your_placeholder, fragmentUserTimeline);

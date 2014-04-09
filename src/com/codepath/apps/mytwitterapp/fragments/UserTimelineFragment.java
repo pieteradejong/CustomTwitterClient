@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.codepath.apps.mytwitterapp.EndlessScrollListener;
 import com.codepath.apps.mytwitterapp.MyTwitterApp;
@@ -19,11 +20,13 @@ public class UserTimelineFragment extends TweetsListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String username = getArguments().getString("username", "");
+		String username = getArguments().getString("username");
+		Toast.makeText(getActivity().getApplicationContext(), "username to load timeline " + username, Toast.LENGTH_SHORT).show();
 		MyTwitterApp.getRestClient().getUserTimeline(new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess(JSONArray jsonTweets) {
 				getAdapter().addAll(Tweet.fromJson(jsonTweets));
+//				Toast.makeText(getActivity().getApplicationContext(), "tweets for " + username, Toast.LENGTH_SHORT).show();
 			}
 		}, 0, username);
 	}

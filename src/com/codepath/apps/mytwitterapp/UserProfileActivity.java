@@ -3,9 +3,11 @@ package com.codepath.apps.mytwitterapp;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.apps.mytwitterapp.fragments.UserTimelineFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -18,6 +20,11 @@ public class UserProfileActivity extends ProfileActivity {
 		setContentView(R.layout.activity_profile);
 		username = getIntent().getStringExtra("username");
 		loadProfileInfo();
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		UserTimelineFragment fragmentDemo = UserTimelineFragment.newInstance("username", "my title");
+		ft.replace(R.id.your_placeholder, fragmentDemo);
+		ft.commit();
 	}
 	
 	private void loadProfileInfo() {

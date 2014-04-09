@@ -3,6 +3,7 @@ package com.codepath.apps.mytwitterapp.fragments;
 import org.json.JSONArray;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,17 @@ public class UserTimelineFragment extends TweetsListFragment {
 				getAdapter().addAll(Tweet.fromJson(jsonTweets));
 			}
 		});
+		String username = getArguments().getString("username", "");
+		
+		
+	}
+	
+	public static UserTimelineFragment newInstance(String username) {
+		UserTimelineFragment fragmentUserProfile = new UserTimelineFragment();
+        Bundle args = new Bundle();
+        args.putString("username", username);
+        fragmentUserProfile.setArguments(args);
+        return fragmentUserProfile;
 	}
 	
 	@Override

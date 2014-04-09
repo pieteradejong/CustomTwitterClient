@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

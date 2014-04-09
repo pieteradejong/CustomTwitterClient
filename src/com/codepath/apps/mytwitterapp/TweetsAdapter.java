@@ -3,6 +3,7 @@ package com.codepath.apps.mytwitterapp;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,12 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class TweetsAdapter extends ArrayAdapter<Tweet>{
+	
+	private Context context;
+	
 	public TweetsAdapter(Context context, List<Tweet> tweets) {
 		super(context, 0, tweets);
-		
+		this.context = context;
 	}
 	
 	@Override
@@ -28,8 +32,18 @@ public class TweetsAdapter extends ArrayAdapter<Tweet>{
 		}
 		
 		Tweet tweet = getItem(position);
-		
 		ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
+		imageView.setOnClickListener(new View.OnClickListener() {
+	        public void onClick(View v) {
+	        	String username = (String) v.getTag();
+	        	Intent i = new Intent(context, UserProfileActivity.class);
+	        	i.putExtra("username", username);
+	        	context.startActivity(i);
+	        }
+	     });
+		
+		// set tag on view
+		view.setTag(tweet.getUser().getScreenName());
 		
 		ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
 		
@@ -42,7 +56,5 @@ public class TweetsAdapter extends ArrayAdapter<Tweet>{
 		bodyView.setText(Html.fromHtml(tweet.getBody()));
 		
 		return view;
-		
 	}
-
 }

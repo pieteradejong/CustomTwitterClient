@@ -11,5 +11,5 @@
     <string name="cancel_tweet">Cancel</string>
     <string name="submit_tweet">Tweet</string>
     <string name="title_activity_profile">ProfileActivity</string>
-
+    <string name="title_activity_userprofile">UserProfileActivity</string>
 </resources>

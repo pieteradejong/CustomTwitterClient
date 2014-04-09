@@ -29,7 +29,6 @@ public class TwitterClient extends OAuthBaseClient {
     }
     public void getHomeTimeline(AsyncHttpResponseHandler handler, int page) {
     	String url = getApiUrl("statuses/home_timeline.json");
-//    	String max_id_string = String.valueOf(max_id);
     	String page_string = String.valueOf(page);
     	RequestParams params = new RequestParams();
     	params.put("count", "30");
@@ -55,9 +54,27 @@ public class TwitterClient extends OAuthBaseClient {
         client.get(url, null, handler);
     }
     
+    public void getMentions(AsyncHttpResponseHandler handler, int page) {
+    	String url = getApiUrl("statuses/home_timeline.json");
+    	String page_string = String.valueOf(page);
+    	RequestParams params = new RequestParams();
+    	params.put("count", "30");
+    	params.put("page", page_string);
+    	client.get(url, params, handler);
+    }
+    
     public void getUserTimeline(AsyncHttpResponseHandler handler) {
         String url = getApiUrl("statuses/user_timeline.json");
         client.get(url, null, handler);
+    }
+    
+    public void getUserTimeline(AsyncHttpResponseHandler handler, int page) {
+    	String url = getApiUrl("statuses/home_timeline.json");
+    	String page_string = String.valueOf(page);
+    	RequestParams params = new RequestParams();
+    	params.put("count", "30");
+    	params.put("page", page_string);
+    	client.get(url, params, handler);
     }
     
     public void getMyCredentials(AsyncHttpResponseHandler handler) {

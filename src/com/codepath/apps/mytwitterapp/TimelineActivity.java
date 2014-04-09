@@ -78,10 +78,10 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	
 	  if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-		  Toast.makeText(this, "YES activity result success", Toast.LENGTH_SHORT).show();
-		  Tweet tweet = (Tweet) data.getSerializableExtra("tweet");
+		 Toast.makeText(this, "YES activity result success", Toast.LENGTH_SHORT).show();
+		 Tweet tweet = (Tweet) data.getSerializableExtra("tweet");
 
-//	     lvTweets = (ListView) findViewById(R.id.lvTweets);
+		 lvTweets = (ListView) findViewById(R.id.lvTweets);
 	     TweetsAdapter adapter = (TweetsAdapter) lvTweets.getAdapter();
 	     adapter.insert(tweet, 0);
 	     adapter.notifyDataSetChanged();
